@@ -262,7 +262,8 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                             S alterationCountByGene = totalResult.get(key);
                             alterationCountByGene.setTotalCount(alterationCountByGene.getTotalCount() + datum.getTotalCount());
                             alterationCountByGene.setNumberOfAlteredCases(alterationCountByGene.getNumberOfAlteredCases() + datum.getNumberOfAlteredCases());
-                            alterationCountByGene.setNumberOfProfiledCases(alterationCountByGene.getNumberOfProfiledCases() + datum.getNumberOfProfiledCases());
+                            // alterationCountByGene.setNumberOfProfiledCases(alterationCountByGene.getNumberOfProfiledCases() + datum.getNumberOfProfiledCases());
+                            alterationCountByGene.setNumberOfProfiledCases(molecularProfileCaseIdentifiers.size());
                             Set<String> matchingGenePanelIds = new HashSet<>();
                             if (!alterationCountByGene.getMatchingGenePanelIds().isEmpty()) {
                                 matchingGenePanelIds.addAll(alterationCountByGene.getMatchingGenePanelIds());
@@ -273,6 +274,9 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                             alterationCountByGene.setMatchingGenePanelIds(matchingGenePanelIds);
                             totalResult.put(key, alterationCountByGene);
                         } else {
+                            // datum.setNumberOfProfiledCases(100 +  datum.getNumberOfProfiledCases()); // need a way to add number of already seen samples and checking genePanel if given
+                            datum.setNumberOfProfiledCa
+                        ses(molecularProfileCaseIdentifiers.size());
                             totalResult.put(key, datum);
                         }
                     });
