@@ -302,10 +302,11 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                     allGene.forEach(datum -> {
                         String key = datum.getUniqueEventKey();
                         S alterationCountByGene = totalResult.get(key);
-                        //alterationCountByGene.setTotalCount(alterationCountByGene.getTotalCount() + datum.getTotalCount());
-                        //alterationCountByGene.setNumberOfAlteredCases(alterationCountByGene.getNumberOfAlteredCases() + datum.getNumberOfAlteredCases());
-                        alterationCountByGene.setNumberOfProfiledCases(alterationCountByGene.getNumberOfProfiledCases() + datum.getNumberOfProfiledCases());
-                        //alterationCountByGene.setNumberOfProfiledCases(molecularProfileCaseIdentifiers.size());
+                        if (studyResult.containsKey(key)) {
+                            alterationCountByGene.setNumberOfProfiledCases(alterationCountByGene.getNumberOfProfiledCases() + studyResult.get(key).getNumberOfProfiledCases());
+                        } else {
+                            alterationCountByGene.setNumberOfProfiledCases(alterationCountByGene.getNumberOfProfiledCases() + studyMolecularProfileCaseIdentifiers.size());
+                        }
                         Set<String> matchingGenePanelIds = new HashSet<>();
                         if (!alterationCountByGene.getMatchingGenePanelIds().isEmpty()) {
                             matchingGenePanelIds.addAll(alterationCountByGene.getMatchingGenePanelIds());
